@@ -1,0 +1,51 @@
+PODS:
+  - Alamofire (4.8.2)
+  - iOSSnapshotTestCase (6.0.2):
+    - iOSSnapshotTestCase/SwiftSupport (= 6.0.2)
+  - iOSSnapshotTestCase/Core (6.0.2)
+  - iOSSnapshotTestCase/SwiftSupport (6.0.2):
+    - iOSSnapshotTestCase/Core
+  - Kingfisher (5.3.1)
+  - Nimble (8.0.1)
+  - Nimble-Snapshots (7.0.0):
+    - Nimble-Snapshots/Core (= 7.0.0)
+  - Nimble-Snapshots/Core (7.0.0):
+    - iOSSnapshotTestCase (~> 6.0)
+    - Nimble (~> 8.0)
+  - Quick (2.0.0)
+  - SnapKit (4.2.0)
+  - SwiftLint (0.31.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.8)
+  - Kingfisher (~> 5.3)
+  - Nimble (~> 8.0.1)
+  - Nimble-Snapshots (~> 7.0)
+  - Quick (~> 2.0.0)
+  - SnapKit (~> 4.2)
+  - SwiftLint (~> 0.31)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+    - iOSSnapshotTestCase
+    - Kingfisher
+    - Nimble
+    - Nimble-Snapshots
+    - Quick
+    - SnapKit
+    - SwiftLint
+
+SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  iOSSnapshotTestCase: 20083a7be9b8ef742610e16c79f15ad829441f29
+  Kingfisher: d9e7e0b209b59b8f9873aa2f37654e81a7beea51
+  Nimble: 45f786ae66faa9a709624227fae502db55a8bdd0
+  Nimble-Snapshots: 2d6d712ceb2d1850d88f850fbd7c732618106022
+  Quick: ce1276c7c27ba2da3cb2fd0cde053c3648b3b22d
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
+  SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
+
+PODFILE CHECKSUM: c20f07e3a848c7b05aa90b1080caddc168efe36f
+
+COCOAPODS: 1.5.3
