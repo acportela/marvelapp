@@ -1,2 +1,2 @@
-# marvellapp
-Marvell App - Fartfech Brazil Challenge
+# Marvell App
+Fartfech Brazil Challenge
