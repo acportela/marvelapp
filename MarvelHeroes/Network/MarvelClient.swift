@@ -8,6 +8,8 @@
 
 import Foundation
 import Alamofire
+import Keys
+import CryptoSwift
 
 class MarvelClient: SessionManager {
     
@@ -51,16 +53,42 @@ class MarvelClient: SessionManager {
         self.request(request).validate(statusCode: 200..<300).responseData { dataResponse in
             
             guard dataResponse.result.error == nil else {
-                callback(.error(Errors.connectivity))
+                callback(.error(Errors.authentication))
                 return
             }
             
             guard let data = dataResponse.data else {
-                callback(.error(Errors.connectivity))
+                callback(.error(Errors.unknown))
                 return
             }
             
             callback(.success(data))
+            
+        }
+        
+    }
+    
+}
+
+extension MarvelClient {
+    
+    enum Configuration {
+        
+        static let baseURL = "https://gateway.marvel.com:443/v1/"
+        
+        private static let keys = MarvelHeroesKeys()
+        private static let privatekey = keys.marvelPrivateKey
+        private static let publicKey = keys.marvelPublicKey
+        
+        static var defaultQueries: [String: String] {
+            
+            let stamp = Date().timeIntervalSince1970.description
+            let hash = "\(stamp)\(privatekey)\(publicKey)".md5()
+            
+            return ["apikey": publicKey,
+                    "ts": stamp,
+                    "hash": hash,
+                    "limit": "20"]
             
         }
         

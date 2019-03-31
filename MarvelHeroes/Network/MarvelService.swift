@@ -25,6 +25,13 @@ final class MarvelService: MarvelServiceProtocol {
     
     func fetchCharacters(name: String? = nil, callback: @escaping (CharactersResultType) -> Void) {
         
+        var queries = MarvelClient.Configuration.defaultQueries
+        if let someName = name {
+            queries["nameStartsWith"] = someName
+        }
+        
+        let url = buildURL(withQueries: queries)
+        MarvelClient.sharedClient.requestDecodadle(url: url, callback: callback)
         
     }
     
@@ -48,14 +55,24 @@ final class MarvelService: MarvelServiceProtocol {
 
 extension MarvelService {
     
-    func query() {
+    func flattened(queries: [String: String]) -> String {
         
-//        var flattenedQueries = ""
-//
-//        self.queries.forEach {
-//            flattenedQueries += $0
-//            if $0 != queries.last { flattenedQueries += "&" }
-//        }
+        var flattened = "?"
+        queries.forEach {
+            let field = "\($0.key)=\($0.value)&"
+            flattened += field
+        }
+        flattened.removeLast()
+        return flattened
         
     }
+    
+    func buildURL(withQueries queries: [String: String] = MarvelClient.Configuration.defaultQueries) -> URL {
+        
+        let baseAndPath = MarvelClient.Configuration.baseURL + MarvelEndpoints.characters.path
+        let urlString = baseAndPath + flattened(queries: queries)
+        return URL(string: urlString)!
+        
+    }
+    
 }

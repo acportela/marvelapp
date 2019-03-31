@@ -17,4 +17,5 @@ enum Errors: Error {
     case parsing
     case connectivity
     case authentication
+    case unknown
 }

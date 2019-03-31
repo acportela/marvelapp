@@ -26,8 +26,8 @@
 		D6583614225047EB004484C4 /* MarvelService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6583613225047EB004484C4 /* MarvelService.swift */; };
 		D65836162250484D004484C4 /* Result.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65836152250484D004484C4 /* Result.swift */; };
 		D6583618225057A6004484C4 /* MarvelClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6583617225057A6004484C4 /* MarvelClient.swift */; };
-		D658361A22505B70004484C4 /* CharactersResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D658361922505B70004484C4 /* CharactersResponse.swift */; };
-		D658361C2250642D004484C4 /* MarvelAPIConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D658361B2250642D004484C4 /* MarvelAPIConstants.swift */; };
+		D658361A22505B70004484C4 /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D658361922505B70004484C4 /* APIResponse.swift */; };
+		D658361C2250642D004484C4 /* MarvelEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D658361B2250642D004484C4 /* MarvelEndpoints.swift */; };
 		D658361E22506F61004484C4 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D658361D22506F61004484C4 /* AppCoordinator.swift */; };
 		D65836212250700D004484C4 /* CharactersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D65836202250700D004484C4 /* CharactersViewController.swift */; };
 		D6E339C5224F9D6D0067A67D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E339C4224F9D6D0067A67D /* AppDelegate.swift */; };
@@ -70,8 +70,8 @@
 		D6583613225047EB004484C4 /* MarvelService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelService.swift; sourceTree = "<group>"; };
 		D65836152250484D004484C4 /* Result.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Result.swift; sourceTree = "<group>"; };
 		D6583617225057A6004484C4 /* MarvelClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarvelClient.swift; sourceTree = "<group>"; };
-		D658361922505B70004484C4 /* CharactersResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersResponse.swift; sourceTree = "<group>"; };
-		D658361B2250642D004484C4 /* MarvelAPIConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarvelAPIConstants.swift; sourceTree = "<group>"; };
+		D658361922505B70004484C4 /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		D658361B2250642D004484C4 /* MarvelEndpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarvelEndpoints.swift; sourceTree = "<group>"; };
 		D658361D22506F61004484C4 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		D65836202250700D004484C4 /* CharactersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharactersViewController.swift; sourceTree = "<group>"; };
 		D6882CFB224F9F3D006ECEA6 /* MarvelHeroesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MarvelHeroesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -194,11 +194,11 @@
 		D658360E22503FCB004484C4 /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				D658361B2250642D004484C4 /* MarvelAPIConstants.swift */,
+				D658361B2250642D004484C4 /* MarvelEndpoints.swift */,
 				D6583613225047EB004484C4 /* MarvelService.swift */,
 				D65836152250484D004484C4 /* Result.swift */,
 				D6583617225057A6004484C4 /* MarvelClient.swift */,
-				D658361922505B70004484C4 /* CharactersResponse.swift */,
+				D658361922505B70004484C4 /* APIResponse.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -524,7 +524,7 @@
 				D65835ED224FAFD0004484C4 /* ImagePath.swift in Sources */,
 				D65835EB224FA67B004484C4 /* ViewCodingProtocol.swift in Sources */,
 				D658361E22506F61004484C4 /* AppCoordinator.swift in Sources */,
-				D658361A22505B70004484C4 /* CharactersResponse.swift in Sources */,
+				D658361A22505B70004484C4 /* APIResponse.swift in Sources */,
 				D65835F6224FDEF0004484C4 /* Resources.swift in Sources */,
 				D6583618225057A6004484C4 /* MarvelClient.swift in Sources */,
 				D65836162250484D004484C4 /* Result.swift in Sources */,
@@ -534,7 +534,7 @@
 				D65835F8224FE28C004484C4 /* UIColorExtension.swift in Sources */,
 				D65835F0224FB1D4004484C4 /* UIImageView+Kingfischer.swift in Sources */,
 				D6E339C5224F9D6D0067A67D /* AppDelegate.swift in Sources */,
-				D658361C2250642D004484C4 /* MarvelAPIConstants.swift in Sources */,
+				D658361C2250642D004484C4 /* MarvelEndpoints.swift in Sources */,
 				D6583614225047EB004484C4 /* MarvelService.swift in Sources */,
 				D658360422500E05004484C4 /* CharactersView.swift in Sources */,
 				D6E339CD224F9D6D0067A67D /* MarvelHeroes.xcdatamodeld in Sources */,
