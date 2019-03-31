@@ -8,10 +8,21 @@ def all_pods
     pod 'Alamofire', '~> 4.8'
     pod 'SnapKit', '~> 4.2'
     pod 'Kingfisher', '~> 5.3'
+    pod 'CryptoSwift', '~> 1.0'
 end
 
 target 'MarvelHeroes' do
+
+    plugin 'cocoapods-keys', {
+    :project => "MarvelHeroes",
+    :target => "MarvelHeroes",
+    :keys => [
+       "MarvelPublicKey",
+       "MarvelPrivateKey"
+    ]}
+
     all_pods
+
 end
 
 
