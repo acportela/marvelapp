@@ -12,7 +12,7 @@ import CryptoSwift
 
 struct MarvelAPIConstants {
     
-    static var baseURL = URL(string: "https://gateway.marvel.com:443/v1/")!
+    static var baseURL = "https://gateway.marvel.com:443/v1/"
     private static let keys = MarvelHeroesKeys()
     private static let privatekey = keys.marvelPrivateKey
     private static let publicKey = keys.marvelPublicKey

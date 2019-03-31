@@ -17,9 +17,9 @@ class MarvelClient: SessionManager {
     
     static let sharedClient = MarvelClient()
     
-    func requestDecodadle<T: Decodable>(request: URLRequest, callback: @escaping (Result<T>) -> Void) {
+    func requestDecodadle<T: Decodable>(url: URL, callback: @escaping (Result<T>) -> Void) {
         
-        self.request(request: request) { resp in
+        self.request(url: url) { resp in
             
             switch resp {
             case .success(let data):
@@ -39,7 +39,9 @@ class MarvelClient: SessionManager {
         
     }
     
-    private func request(request: URLRequest, callback: @escaping (Result<Data>) -> Void) {
+    private func request(url: URL, callback: @escaping (Result<Data>) -> Void) {
+        
+        let request = URLRequest(url: url)
         
         guard let rechability = NetworkReachabilityManager(), rechability.isReachable else {
             callback(.error(Errors.connectivity))

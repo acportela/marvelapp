@@ -23,8 +23,8 @@ protocol MarvelServiceProtocol: class {
 
 final class MarvelService: MarvelServiceProtocol {
     
-
     func fetchCharacters(name: String? = nil, callback: @escaping (CharactersResultType) -> Void) {
+        
         
     }
     
@@ -44,4 +44,18 @@ final class MarvelService: MarvelServiceProtocol {
         
     }
     
+}
+
+extension MarvelService {
+    
+    func query() {
+        
+//        var flattenedQueries = ""
+//
+//        self.queries.forEach {
+//            flattenedQueries += $0
+//            if $0 != queries.last { flattenedQueries += "&" }
+//        }
+        
+    }
 }
