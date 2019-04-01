@@ -17,9 +17,10 @@ enum Resources {
 
 extension Resources.Colors {
     
-    static let red =  UIColor(red: 237, green: 26, blue: 41)
-    static let lightRed =  UIColor(red: 250, green: 116, blue: 125)
-    static let black =  UIColor(red: 36, green: 0, blue: 3)
+    static let red =  UIColor(red: 195, green: 66, blue: 63)
+    //static let lightRed =  UIColor(red: 250, green: 116, blue: 125)
+    static let white =  UIColor(red: 255, green: 255, blue: 255)
+    static let black =  UIColor(red: 81, green: 59, blue: 65)
     
 }
 

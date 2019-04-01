@@ -13,7 +13,7 @@ typealias MaterialsResultType = Result<APIResponse<CharacterMaterial>>
 
 protocol MarvelServiceProtocol: class {
     
-    func fetchCharacters(name: String?, callback: @escaping (CharactersResultType) -> Void )
+    func fetchCharacters(name: String?, offset: Int, callback: @escaping (CharactersResultType) -> Void )
     func fetchComics(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
     func fetchStories(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
     func fetchEvents(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
@@ -23,10 +23,12 @@ protocol MarvelServiceProtocol: class {
 
 final class MarvelService: MarvelServiceProtocol {
     
-    func fetchCharacters(name: String? = nil, callback: @escaping (CharactersResultType) -> Void) {
+    func fetchCharacters(name: String? = nil, offset: Int, callback: @escaping (CharactersResultType) -> Void) {
         
         var queries = MarvelClient.Configuration.defaultQueries
-        if let someName = name {
+        queries["offset"] = offset.description
+        
+        if let someName = name, !someName.isEmpty {
             queries["nameStartsWith"] = someName
         }
         

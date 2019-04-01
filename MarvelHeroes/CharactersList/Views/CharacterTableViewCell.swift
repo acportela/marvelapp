@@ -12,13 +12,18 @@ import Kingfisher
 
 final class CharacterTableViewCell: UITableViewCell {
     
-    private let thumb = UIImageView()
+    private let thumb: UIImageView = {
+        let image = UIImageView()
+        image.layer.cornerRadius = 10
+        image.layer.masksToBounds = true
+        return image
+    }()
     
     private let name: UILabel = {
         let name = UILabel()
         name.textAlignment = .left
-        name.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        name.textColor = Resources.Colors.lightRed
+        name.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        name.textColor = Resources.Colors.white
         return name
     }()
     
@@ -35,15 +40,17 @@ final class CharacterTableViewCell: UITableViewCell {
     private let about: UILabel = {
         let about =  UILabel()
         about.textAlignment = .justified
-        about.adjustsFontSizeToFitWidth = true
-        about.minimumScaleFactor = 0.7
         about.numberOfLines = 0
-        about.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        about.textColor = Resources.Colors.lightRed
+        about.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        about.textColor = Resources.Colors.white
         return about
     }()
     
     var characterWasFavorited: ((Bool) -> Void)?
+    
+    static func height() -> CGFloat {
+        return 96
+    }
     
     public init(frame: CGRect) {
         super.init(style: .default, reuseIdentifier: type(of: self).reusableIdentifier)
@@ -76,7 +83,8 @@ extension CharacterTableViewCell: ViewCodingProtocol {
         thumb.snp.makeConstraints { make in
             make.height.width.equalTo(80)
             make.left.equalToSuperview().offset(8)
-            make.centerY.equalToSuperview()
+            make.top.equalToSuperview().offset(8)
+            make.bottom.equalToSuperview().inset(8)
         }
         
         heart.snp.makeConstraints { make in
@@ -86,21 +94,22 @@ extension CharacterTableViewCell: ViewCodingProtocol {
         }
 
         about.snp.makeConstraints { make in
-            make.top.equalTo(name.snp.bottom).offset(8)
-            make.left.equalTo(thumb.snp.right).offset(8)
-            make.right.equalTo(heart.snp.left).offset(-8).priority(.high)
-            make.bottom.equalToSuperview().inset(8)
+            make.top.equalTo(name.snp.bottom)
+            make.left.equalTo(thumb.snp.right).offset(16)
+            make.right.equalTo(heart.snp.left).offset(-16).priority(.high)
+            make.bottom.lessThanOrEqualToSuperview().inset(8)
         }
 
         name.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8)
-            make.left.equalTo(thumb.snp.right).offset(8)
-            make.right.equalTo(heart.snp.left).offset(-8).priority(.high)
+            make.left.equalTo(thumb.snp.right).offset(16)
+            make.right.equalTo(heart.snp.left).offset(-16).priority(.high)
         }
         
     }
     
     func configureViews() {
+        selectionStyle = .none
         backgroundColor = Resources.Colors.black
         heart.addTarget(self, action: #selector(heartWasTouched), for: .touchUpInside)
     }
@@ -113,7 +122,7 @@ extension CharacterTableViewCell {
         let name: String
         let about: String
         let isFavorite: Bool
-        let image: ImagePath
+        let image: Thumbnail
     }
     
     public func setup(with config: Configuration) {
@@ -123,7 +132,6 @@ extension CharacterTableViewCell {
         thumb.download(image: config.image.fullPath)
         heart.isSelected = config.isFavorite
         
-        about.sizeToFit()
     }
     
 }

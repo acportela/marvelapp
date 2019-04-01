@@ -19,30 +19,29 @@ class AppCoordinator: Coordinator {
     private var navigation: UINavigationController
     
     init(rootViewController: UINavigationController) {
-        
         navigation = rootViewController
-        
     }
     
     func start() {
-        
+        configureNavigationBar()
         startCharacters()
     }
     
+    func configureNavigationBar() {
+        navigation.navigationBar.barTintColor = Resources.Colors.red
+        navigation.navigationBar.tintColor = Resources.Colors.white
+        navigation.navigationBar.barStyle = .black
+        navigation.navigationBar.isTranslucent = false
+    }
+    
     private func startCharacters() {
-        
         let controller = CharactersViewController()
         controller.delegate = self
-        navigation.viewControllers = [controller]
-        
-        service.fetchCharacters { result in
-            switch result {
-            case .success:
-                break
-            case .error:
-                break
-            }
-        }
+        navigation.pushViewController(controller, animated: false)
+    }
+    
+    private func startDetails(ofCharacter character: Character,
+                              withFavoriteState favorite: Bool) {
         
     }
     

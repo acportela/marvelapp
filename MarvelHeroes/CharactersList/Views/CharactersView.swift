@@ -18,8 +18,16 @@ final class CharactersView: UIView {
     
     let searchBar: UISearchBar = {
         let view = UISearchBar()
-        view.barTintColor = Resources.Colors.lightRed
+        view.barTintColor = Resources.Colors.red
+        view.tintColor = Resources.Colors.black
+        view.isTranslucent = true
         return view
+    }()
+    
+    let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .white)
+        indicator.hidesWhenStopped = true
+        return indicator
     }()
     
     public override init(frame: CGRect = .zero) {
@@ -41,23 +49,34 @@ extension CharactersView: ViewCodingProtocol {
     func buildViewHierarchy() {
         addSubview(tableView)
         addSubview(searchBar)
+        addSubview(activityIndicator)
     }
     
     func setupConstraints() {
         
         searchBar.snp.makeConstraints { make in
-            make.top.right.left.equalToSuperview()
-            make.height.equalTo(56)
+            make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin)
+            make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin)
+            make.top.equalTo(safeAreaLayoutGuide.snp.topMargin)
         }
         
         tableView.snp.makeConstraints { make in
             make.top.equalTo(searchBar.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
+            make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin)
+            make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottomMargin)
         }
+        
+        activityIndicator.snp.makeConstraints { make in
+            make.height.width.equalTo(40)
+            make.center.equalToSuperview()
+        }
+        
     }
     
     func configureViews() {
         backgroundColor = Resources.Colors.black
+        activityIndicator.isHidden = true
     }
     
 }
