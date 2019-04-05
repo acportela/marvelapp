@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct Character: Codable {
+class Character: Codable {
     
     let id: Int
     let name: String
     let description: String
     let thumbnail: Thumbnail
     
-    public init(from decoder: Decoder) throws {
+    required public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(Int.self, forKey: .id)

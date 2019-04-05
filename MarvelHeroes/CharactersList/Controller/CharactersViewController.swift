@@ -17,6 +17,7 @@ final class CharactersViewController: UIViewController {
     
     let charactersView = CharactersView()
     let service = MarvelService()
+    let storage = FavoriteCharactersStorage()
     lazy var dataSource = CharactersDatasource(tableView: charactersView.tableView)
     
     var resultSet = 0
@@ -40,7 +41,8 @@ final class CharactersViewController: UIViewController {
         super.viewDidLoad()
         
         charactersView.searchBar.delegate = self
-        dataSource.delegate = self
+        dataSource.charactersDelegate = self
+        dataSource.favoriteDelegate = self
         
         title = "Marvel Characters"
         fetchCharacters()
@@ -53,7 +55,7 @@ extension CharactersViewController {
     private func fetchCharacters() {
         
         if isLoadingData { return }
-        if resultSet != 0, dataSource.items.count == resultSet { return }
+        if resultSet != 0, dataSource.characters.count == resultSet { return }
         
         charactersView.activityIndicator.isHidden = false
         isLoadingData = true
@@ -68,7 +70,7 @@ extension CharactersViewController {
                 //TODO refactor page update logic
                 self?.nextPage += 1
                 self?.resultSet = response.data.total
-                self?.dataSource.items.append(contentsOf: response.data.results)
+                self?.dataSource.characters.append(contentsOf: response.data.results)
             case .error:
                 break
             }
@@ -80,7 +82,7 @@ extension CharactersViewController {
     func resetState() {
         nextPage = 0
         resultSet = 0
-        dataSource.items = []
+        dataSource.characters = []
     }
     
 }
@@ -94,14 +96,26 @@ extension CharactersViewController: CharactersDelegateProtocol {
         fetchCharacters()
     }
 
+}
+
+extension CharactersViewController: FavoriteDelegateProtocol {
+    
     func didFavoriteCharacter(_ character: Character) {
-        
+        guard var favorites = storage.load() else {
+            return
+        }
+        favorites.ids.insert(character.id)
+        try? storage.save(favorites)
     }
     
     func didUnfavoriteCharacter(_ character: Character) {
-        
+        guard var favorites = storage.load() else {
+            return
+        }
+        favorites.ids.remove(character.id)
+        try? storage.save(favorites)
     }
-
+    
 }
 
 extension CharactersViewController: UISearchBarDelegate {

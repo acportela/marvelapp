@@ -12,13 +12,11 @@ typealias CharactersResultType = Result<APIResponse<Character>>
 typealias MaterialsResultType = Result<APIResponse<CharacterMaterial>>
 
 protocol MarvelServiceProtocol: class {
-    
     func fetchCharacters(name: String?, offset: Int, callback: @escaping (CharactersResultType) -> Void )
     func fetchComics(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
     func fetchStories(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
     func fetchEvents(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
     func fetchSeries(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
-    
 }
 
 final class MarvelService: MarvelServiceProtocol {
@@ -58,7 +56,6 @@ final class MarvelService: MarvelServiceProtocol {
 extension MarvelService {
     
     func flattened(queries: [String: String]) -> String {
-        
         var flattened = "?"
         queries.forEach {
             let field = "\($0.key)=\($0.value)&"
@@ -66,15 +63,12 @@ extension MarvelService {
         }
         flattened.removeLast()
         return flattened
-        
     }
     
     func buildURL(withQueries queries: [String: String] = MarvelClient.Configuration.defaultQueries) -> URL {
-        
         let baseAndPath = MarvelClient.Configuration.baseURL + MarvelEndpoints.characters.path
         let urlString = baseAndPath + flattened(queries: queries)
         return URL(string: urlString)!
-        
     }
     
 }

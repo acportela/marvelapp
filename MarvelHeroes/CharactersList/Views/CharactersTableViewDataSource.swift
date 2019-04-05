@@ -10,12 +10,9 @@ import UIKit
 
 protocol TableViewDatasource {
     
-    associatedtype ItemType
-    
-    var items: [ItemType] {get}
     var tableView: UITableView? {get}
     
-    init(items: [ItemType], tableView: UITableView)
+    init(tableView: UITableView)
     
     func setupTableView()
     
@@ -23,18 +20,19 @@ protocol TableViewDatasource {
 
 final class CharactersDatasource: NSObject, TableViewDatasource {
     
-    var items: [Character] {
+    var characters: [Character] = [] {
         didSet {
             tableView?.reloadData()
         }
     }
     weak var tableView: UITableView?
-    weak var delegate: CharactersDelegateProtocol?
+    weak var charactersDelegate: CharactersDelegateProtocol?
+    weak var favoriteDelegate: FavoriteDelegateProtocol?
+    let storage = FavoriteCharactersStorage()
     
     var lastOffset = CGPoint.zero
     
-    required init(items: [Character] = [], tableView: UITableView) {
-        self.items = items
+    init(tableView: UITableView) {
         self.tableView = tableView
         super.init()
         tableView.register(CharacterTableViewCell.self)
@@ -52,27 +50,30 @@ final class CharactersDatasource: NSObject, TableViewDatasource {
 extension CharactersDatasource: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.items.count
+        return characters.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeue(CharacterTableViewCell.self, indexPath: indexPath)
         
-        let character = self.items[indexPath.row]
+        let character = characters[indexPath.row]
+        
+        let isFavorite = storage.load()?.ids.contains(character.id) ?? false
+        
         let config = CharacterTableViewCell.Configuration(name: character.name,
                                                           about: character.description,
-                                                          isFavorite: false,
+                                                          isFavorite: isFavorite,
                                                           image: character.thumbnail)
         
         cell.characterWasFavorited = { [weak self] favorite in
-            favorite ? self?.delegate?.didFavoriteCharacter(character)
-            : self?.delegate?.didUnfavoriteCharacter(character)
+            favorite ? self?.favoriteDelegate?.didFavoriteCharacter(character)
+            : self?.favoriteDelegate?.didUnfavoriteCharacter(character)
         }
         cell.setup(with: config)
         
-        if tableView.contentOffset.y > self.lastOffset.y, indexPath.row == items.count-5 {
-            delegate?.shouldFetchMoreContent()
+        if tableView.contentOffset.y > self.lastOffset.y, indexPath.row == characters.count-5 {
+            charactersDelegate?.shouldFetchMoreContent()
         }
         lastOffset = tableView.contentOffset
         
@@ -88,7 +89,7 @@ extension CharactersDatasource: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didSelectCharacter(items[indexPath.row])
+        charactersDelegate?.didSelectCharacter(characters[indexPath.row])
     }
     
 }
