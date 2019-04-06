@@ -13,6 +13,7 @@ final class CharactersView: UIView {
     let tableView: UITableView = {
         let view = UITableView()
         view.separatorStyle = .none
+        view.estimatedRowHeight = 96
         return view
     }()
     
@@ -76,6 +77,7 @@ extension CharactersView: ViewCodingProtocol {
     
     func configureViews() {
         backgroundColor = Resources.Colors.black
+        tableView.backgroundColor = Resources.Colors.black
         activityIndicator.isHidden = true
     }
     

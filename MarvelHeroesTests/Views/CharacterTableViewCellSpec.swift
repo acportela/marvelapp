@@ -56,8 +56,6 @@ class CharacterTableViewCellSpec: QuickSpec {
                 
                 let frame = CGRect(x: 0, y: 0, width: 320, height: 96)
                 
-                let path = ImagePath(path: "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784", fileExtension: "jpg")
-                
                 let description = """
                 Rick Jones has been Hulk's best bud since day one, but now he's more than a friend...he's a teammate!
                 Transformed by a Gamma energy explosion
@@ -66,7 +64,7 @@ class CharacterTableViewCellSpec: QuickSpec {
                 let config = CharacterTableViewCell.Configuration(name: "3-D Man",
                                                                   about: description,
                                                                   isFavorite: favorite,
-                                                                  image: path)
+                                                                  image: Thumbnail())
                 
                 sut = CharacterTableViewCell(frame: frame)
                 sut.setup(with: config)

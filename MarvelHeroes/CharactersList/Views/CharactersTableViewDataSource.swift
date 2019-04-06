@@ -85,7 +85,7 @@ extension CharactersDatasource: UITableViewDataSource {
 extension CharactersDatasource: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return CharacterTableViewCell.height()
+        return characters[indexPath.row].description.isEmpty ? 96 : UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

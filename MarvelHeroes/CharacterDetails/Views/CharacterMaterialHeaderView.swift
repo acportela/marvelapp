@@ -13,13 +13,13 @@ final class CharacterMaterialHeaderView: UIView {
     private let name: UILabel = {
         let name = UILabel()
         name.textAlignment = .center
-        name.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        name.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
         name.textColor = Resources.Colors.red
         return name
     }()
     
     static func height() -> CGFloat {
-        return 40
+        return 30
     }
 
     override init(frame: CGRect = .zero) {
@@ -41,7 +41,9 @@ extension CharacterMaterialHeaderView: ViewCodingProtocol {
     
     func setupConstraints() {
         name.snp.makeConstraints { make in
-            make.edges.equalToSuperview().offset(8)
+            make.left.equalToSuperview().offset(8)
+            make.right.equalToSuperview().inset(8)
+            make.centerY.equalToSuperview()
         }
     }
     

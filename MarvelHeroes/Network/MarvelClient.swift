@@ -87,8 +87,7 @@ extension MarvelClient {
             
             return ["apikey": publicKey,
                     "ts": stamp,
-                    "hash": hash,
-                    "limit": "20"]
+                    "hash": hash]
             
         }
         

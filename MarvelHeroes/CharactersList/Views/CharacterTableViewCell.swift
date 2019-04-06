@@ -23,6 +23,9 @@ final class CharacterTableViewCell: UITableViewCell {
         let name = UILabel()
         name.textAlignment = .left
         name.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
+        name.adjustsFontSizeToFitWidth = true
+        name.minimumScaleFactor = 0.9
+        name.lineBreakMode = .byClipping
         name.textColor = Resources.Colors.white
         return name
     }()
@@ -41,10 +44,12 @@ final class CharacterTableViewCell: UITableViewCell {
         let about =  UILabel()
         about.textAlignment = .justified
         about.numberOfLines = 0
-        about.font = UIFont.systemFont(ofSize: 13, weight: .regular)
+        about.font = UIFont.systemFont(ofSize: 13, weight: .light)
         about.textColor = Resources.Colors.white
         return about
     }()
+    
+    private let content = UIView()
     
     var characterWasFavorited: ((Bool) -> Void)?
     
@@ -72,19 +77,24 @@ final class CharacterTableViewCell: UITableViewCell {
 extension CharacterTableViewCell: ViewCodingProtocol {
     
     func buildViewHierarchy() {
-        addSubview(thumb)
-        addSubview(heart)
-        addSubview(name)
-        addSubview(about)
+        addSubview(content)
+        content.addSubview(thumb)
+        content.addSubview(heart)
+        content.addSubview(name)
+        content.addSubview(about)
     }
     
     func setupConstraints() {
         
+        content.snp.makeConstraints { make in
+            make.left.top.equalToSuperview().offset(8)
+            make.right.bottom.equalToSuperview().inset(8)
+        }
+        
         thumb.snp.makeConstraints { make in
             make.height.width.equalTo(80)
             make.left.equalToSuperview().offset(8)
-            make.top.equalToSuperview().offset(8)
-            make.bottom.equalToSuperview().inset(8)
+            make.centerY.equalToSuperview()
         }
         
         heart.snp.makeConstraints { make in
@@ -94,16 +104,16 @@ extension CharacterTableViewCell: ViewCodingProtocol {
         }
 
         about.snp.makeConstraints { make in
-            make.top.equalTo(name.snp.bottom)
+            make.top.equalTo(name.snp.bottom).offset(8)
             make.left.equalTo(thumb.snp.right).offset(16)
-            make.right.equalTo(heart.snp.left).offset(-16).priority(.high)
+            make.right.equalTo(heart.snp.left).offset(-16)
             make.bottom.lessThanOrEqualToSuperview().inset(8)
         }
 
         name.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(8)
             make.left.equalTo(thumb.snp.right).offset(16)
-            make.right.equalTo(heart.snp.left).offset(-16).priority(.high)
+            make.right.equalTo(heart.snp.left).offset(-16)
         }
         
     }
@@ -126,12 +136,10 @@ extension CharacterTableViewCell {
     }
     
     public func setup(with config: Configuration) {
-        
         name.text = config.name
         about.text = config.about
         thumb.download(image: config.image.fullPath)
         heart.isSelected = config.isFavorite
-        
     }
     
 }

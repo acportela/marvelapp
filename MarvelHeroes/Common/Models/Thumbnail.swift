@@ -22,6 +22,11 @@ struct Thumbnail: Codable {
         case pathExtension = "extension"
     }
     
+    public init(path: String = "", pathExtension: String = "") {
+        self.path = path
+        self.pathExtension = pathExtension
+    }
+    
     public init(from decoder: Decoder) throws {
         
         let container = try decoder.container(keyedBy: CodingKeys.self)

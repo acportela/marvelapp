@@ -20,9 +20,9 @@ final class CharacterMaterialCell: UITableViewCell {
     
     private let about: UILabel = {
         let about =  UILabel()
-        about.textAlignment = .justified
+        about.textAlignment = .left
         about.numberOfLines = 0
-        about.font = UIFont.systemFont(ofSize: 13, weight: .light)
+        about.font = UIFont.systemFont(ofSize: 12, weight: .light)
         about.textColor = Resources.Colors.white
         return about
     }()
@@ -60,16 +60,20 @@ extension CharacterMaterialCell: ViewCodingProtocol {
     func setupConstraints() {
         
         container.snp.makeConstraints { make in
-            make.edges.equalToSuperview().offset(8)
+            make.top.left.equalToSuperview().offset(8)
+            make.right.bottom.equalToSuperview().inset(8)
         }
         
         name.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
+            make.height.equalTo(20)
         }
+        
+        //about.setContentCompressionResistancePriority(.required, for: .vertical)
         
         about.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()
-            make.top.equalTo(name.snp.bottom).offset(8)
+            make.top.greaterThanOrEqualTo(name.snp.bottom).offset(8)
         }
         
     }
@@ -88,11 +92,11 @@ extension CharacterMaterialCell {
     public struct Configuration {
         let name: String
         let description: String
-        let variantDescription: String
     }
     
     public func setup(with config: Configuration) {
         name.text = config.name
+        about.text = config.description
     }
     
 }

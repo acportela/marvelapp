@@ -25,7 +25,8 @@ final class MarvelService: MarvelServiceProtocol {
         
         var queries = MarvelClient.Configuration.defaultQueries
         queries["offset"] = offset.description
-        
+        queries["limit"] = "20"
+
         if let someName = name, !someName.isEmpty {
             queries["nameStartsWith"] = someName
         }
