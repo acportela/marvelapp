@@ -12,25 +12,11 @@ struct CharacterMaterial: Codable {
     
     let title: String
     let description: String
-    let variantDescription: String
     
     public init(from decoder: Decoder) throws {
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let title = try? container.decode(String.self, forKey: .title)
-        let description = try? container.decode(String.self, forKey: .description)
-        let varDescription = try? container.decode(String.self, forKey: .variantDescription)
-        
-        self.title = OptionalFieldHandler.handle(title,
-                                                 validation: { title in !title.isEmpty},
-                                                 defaultValue: "Unknown")
-        self.description = OptionalFieldHandler.handle(description,
-                                                       validation: { description in !description.isEmpty},
-                                                       defaultValue: "Not Present")
-        self.variantDescription = OptionalFieldHandler.handle(varDescription,
-                                                              validation: { varDescription in !varDescription.isEmpty},
-                                                              defaultValue: "Not Present")
-        
+        self.title = (try? container.decode(String.self, forKey: .title)) ?? "Unknown"
+        self.description = (try? container.decode(String.self, forKey: .description)) ?? "Not Available"
     }
     
 }

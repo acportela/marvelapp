@@ -40,20 +40,10 @@ final class CharacterTableViewCell: UITableViewCell {
         return button
     }()
     
-    private let about: UILabel = {
-        let about =  UILabel()
-        about.textAlignment = .justified
-        about.numberOfLines = 0
-        about.font = UIFont.systemFont(ofSize: 13, weight: .light)
-        about.textColor = Resources.Colors.white
-        return about
-    }()
-    
     private var character: Character? {
         didSet {
             guard let char = character else { return }
             name.text = char.name
-            about.text = char.description
             thumb.download(image: char.thumbnail.fullPath)
         }
     }
@@ -90,7 +80,6 @@ extension CharacterTableViewCell: ViewCodingProtocol {
         content.addSubview(thumb)
         content.addSubview(heart)
         content.addSubview(name)
-        content.addSubview(about)
     }
     
     func setupConstraints() {
@@ -108,21 +97,14 @@ extension CharacterTableViewCell: ViewCodingProtocol {
         
         heart.snp.makeConstraints { make in
             make.height.width.equalTo(25)
-            make.right.equalToSuperview().inset(8)
-            make.centerY.equalToSuperview()
-        }
-
-        about.snp.makeConstraints { make in
-            make.top.equalTo(name.snp.bottom).offset(8)
-            make.left.equalTo(thumb.snp.right).offset(16)
-            make.right.equalTo(heart.snp.left).offset(-16)
-            make.bottom.lessThanOrEqualToSuperview().inset(8)
+            make.top.equalTo(name.snp.bottom).offset(16)
+            make.left.equalTo(name.snp.left)
         }
 
         name.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(8)
-            make.left.equalTo(thumb.snp.right).offset(16)
-            make.right.equalTo(heart.snp.left).offset(-16)
+            make.top.equalTo(thumb.snp.top)
+            make.left.equalTo(thumb.snp.right).offset(32)
+            make.right.equalToSuperview().offset(-16)
         }
         
     }

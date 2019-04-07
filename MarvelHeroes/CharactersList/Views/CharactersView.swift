@@ -32,11 +32,8 @@ final class CharactersView: UIView {
     }()
     
     public override init(frame: CGRect = .zero) {
-        
         super.init(frame: frame)
-        
         setupViewConfiguration()
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {

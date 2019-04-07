@@ -28,18 +28,9 @@ struct Thumbnail: Codable {
     }
     
     public init(from decoder: Decoder) throws {
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        let path = try? container.decode(String.self, forKey: .path)
-        let pathExtension = try? container.decode(String.self, forKey: .pathExtension)
-        
-        self.path = OptionalFieldHandler.handle(path,
-                                                validation: { path in !path.isEmpty},
-                                                defaultValue: "")
-        self.pathExtension = OptionalFieldHandler.handle(pathExtension,
-                                                         validation: { pathExtension in !pathExtension.isEmpty},
-                                                         defaultValue: "")
-        
+        self.path = (try? container.decode(String.self, forKey: .path)) ?? ""
+        self.pathExtension = (try? container.decode(String.self, forKey: .pathExtension)) ?? ""
     }
     
 }

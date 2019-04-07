@@ -37,19 +37,24 @@ final class CharactersDetailsViewController: UIViewController {
     }
     
     func setupView() {
+        
         title = character.name
+        
         var isFavorite = false
         if let favorites = storage.get(from: .favorites)?.ids, favorites.contains(character.id) {
             isFavorite = true
         }
+        
         let config = CharacterDetailsView.Configuration.init(character: character,
                                                              isFavorite: isFavorite)
         detailsView.setup(with: config)
+        
         detailsView.characterWasFavorited = { [weak self] wasFavorited in
             guard let sSelf = self else { return }
             wasFavorited ? sSelf.favoriteDelegate?.didFavoriteCharacter(sSelf.character)
             : sSelf.favoriteDelegate?.didUnfavoriteCharacter(sSelf.character)
         }
+        
     }
     
 }
