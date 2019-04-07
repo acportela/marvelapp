@@ -9,18 +9,14 @@
 import UIKit
 
 protocol TableViewDatasource {
-    
     var tableView: UITableView? {get}
-    
     init(tableView: UITableView)
-    
     func setupTableView()
-    
 }
 
 final class CharactersDatasource: NSObject, TableViewDatasource {
     
-    var characters: [Character] = [] {
+    var characters: [MarvelCharacter] = [] {
         didSet {
             tableView?.reloadData()
         }
@@ -44,11 +40,9 @@ final class CharactersDatasource: NSObject, TableViewDatasource {
         self.tableView?.delegate = self
         self.tableView?.reloadData()
     }
-    
 }
 
 extension CharactersDatasource: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return characters.count
     }
@@ -73,11 +67,9 @@ extension CharactersDatasource: UITableViewDataSource {
         
         return cell
     }
-    
 }
 
 extension CharactersDatasource: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return CharacterTableViewCell.height()
     }
@@ -85,5 +77,4 @@ extension CharactersDatasource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         charactersDelegate?.didSelectCharacter(characters[indexPath.row])
     }
-    
 }

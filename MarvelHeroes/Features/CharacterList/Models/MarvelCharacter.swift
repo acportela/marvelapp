@@ -8,11 +8,17 @@
 
 import Foundation
 
-struct Character: Codable {
+struct MarvelCharacter: Codable {
     
     let id: Int
     let name: String
     let thumbnail: Thumbnail
+    
+    init(id: Int, name: String, thumbnail: Thumbnail) {
+        self.id = id
+        self.name = name
+        self.thumbnail = thumbnail
+    }
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -20,5 +26,4 @@ struct Character: Codable {
         thumbnail = try container.decode(Thumbnail.self, forKey: .thumbnail)
         self.name = (try? container.decode(String.self, forKey: .name)) ?? ""
     }
-    
 }

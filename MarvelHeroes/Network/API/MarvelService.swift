@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias CharactersResultType = Result<APIResponse<Character>>
+typealias CharactersResultType = Result<APIResponse<MarvelCharacter>>
 typealias MaterialsResultType = Result<APIResponse<CharacterMaterial>>
 
 protocol MarvelServiceProtocol: class {

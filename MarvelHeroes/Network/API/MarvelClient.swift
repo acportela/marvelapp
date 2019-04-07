@@ -20,9 +20,7 @@ class MarvelClient: SessionManager {
     static let sharedClient = MarvelClient()
     
     func requestDecodadle<T: Decodable>(url: URL, callback: @escaping (Result<T>) -> Void) {
-        
         self.request(url: url) { resp in
-            
             switch resp {
             case .success(let data):
                 
@@ -30,15 +28,13 @@ class MarvelClient: SessionManager {
                     let object = try JSONDecoder().decode(T.self, from: data)
                     callback(.success(object))
                 } catch {
-                    callback(.error(Errors.parsing))
+                    callback(.error(.parsing))
                 }
                 
             case .error(let error):
                 callback(.error(error))
             }
-            
         }
-        
     }
     
     private func request(url: URL, callback: @escaping (Result<Data>) -> Void) {
@@ -46,32 +42,29 @@ class MarvelClient: SessionManager {
         let request = URLRequest(url: url)
         
         guard let rechability = NetworkReachabilityManager(), rechability.isReachable else {
-            callback(.error(Errors.connectivity))
+            callback(.error(.connectivity))
             return
         }
         
         self.request(request).validate(statusCode: 200..<300).responseData { dataResponse in
             
             guard dataResponse.result.error == nil else {
-                callback(.error(Errors.authentication))
+                callback(.error(.authentication))
                 return
             }
             
             guard let data = dataResponse.data else {
-                callback(.error(Errors.unknown))
+                callback(.error(.unknown))
                 return
             }
             
             callback(.success(data))
             
         }
-        
     }
-    
 }
 
 extension MarvelClient {
-    
     enum Configuration {
         
         static let baseURL = "https://gateway.marvel.com:443/v1/"
@@ -90,7 +83,5 @@ extension MarvelClient {
                     "hash": hash]
             
         }
-        
     }
-    
 }

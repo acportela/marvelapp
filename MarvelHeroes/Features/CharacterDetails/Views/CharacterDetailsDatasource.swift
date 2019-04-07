@@ -9,31 +9,23 @@
 import UIKit
 
 final class CharacterDetailsDatasource: NSObject, TableViewDatasource {
-    
+
     let titles = ["Comics", "Events", "Stories", "Series"]
     
     private var comics: [CharacterMaterial] = [] {
-        didSet {
-            tableView?.reloadSections([0], with: .bottom)
-        }
+        didSet { reload(section: 0) }
     }
     
     private var events: [CharacterMaterial] = [] {
-        didSet {
-            tableView?.reloadSections([1], with: .bottom)
-        }
+        didSet { reload(section: 1) }
     }
 
     private var stories: [CharacterMaterial] = [] {
-        didSet {
-            tableView?.reloadSections([2], with: .bottom)
-        }
+        didSet { reload(section: 2) }
     }
     
     private var series: [CharacterMaterial] = [] {
-        didSet {
-            tableView?.reloadSections([3], with: .bottom)
-        }
+        didSet { reload(section: 3) }
     }
     
     weak var tableView: UITableView?
@@ -50,10 +42,27 @@ final class CharacterDetailsDatasource: NSObject, TableViewDatasource {
         self.tableView?.delegate = self
         self.tableView?.reloadData()
     }
-    
 }
 
 extension CharacterDetailsDatasource {
+    func updateTable(with data: [CharacterMaterial], ofKind kind: MaterialKind) {
+        switch kind {
+        case .comics:
+            comics = data
+        case .events:
+            events = data
+        case .series:
+            series = data
+        case .stories:
+            stories = data
+        }
+    }
+    
+    func reload(section: Int) {
+        UIView.performWithoutAnimation {
+            tableView?.reloadSections([section], with: .none)
+        }
+    }
     
     private func items(forSection section: Int) -> [CharacterMaterial] {
         switch section {
@@ -69,23 +78,9 @@ extension CharacterDetailsDatasource {
             return []
         }
     }
-    
-    func updateTable(with data: [CharacterMaterial], ofKind kind: MaterialKind) {
-        switch kind {
-        case .comics:
-            comics = data
-        case .events:
-            events = data
-        case .series:
-            series = data
-        case .stories:
-            stories = data
-        }
-    }
 }
 
 extension CharacterDetailsDatasource: UITableViewDataSource {
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return items(forSection: section).count
     }
@@ -118,16 +113,13 @@ extension CharacterDetailsDatasource: UITableViewDataSource {
         cell.setup(with: config)
         return cell
     }
-    
 }
 
 extension CharacterDetailsDatasource: UITableViewDelegate {
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         guard items(forSection: section).count > 0 else {
             return 0
         }
         return CharacterMaterialHeaderView.height()
     }
-    
 }

@@ -20,7 +20,6 @@ extension Resources.Colors {
 }
 
 extension Resources.Images {
-    
     static let favoriteIconFilled = image(named: "favorite_full_icon")
     static let favoriteIconOutlined = image(named: "favorite_empty_icon")
     
@@ -30,5 +29,4 @@ extension Resources.Images {
         }
         return image
     }
-    
 }

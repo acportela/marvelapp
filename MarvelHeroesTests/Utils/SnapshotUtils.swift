@@ -12,7 +12,6 @@ import Nimble_Snapshots
 
 @testable import MarvelHeroes
 
-
 func matchSnapshot(named name: String,
                    record: Bool = false) -> Predicate<Snapshotable> {
     

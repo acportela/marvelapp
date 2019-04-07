@@ -10,7 +10,7 @@ import UIKit
 
 protocol CharactersViewControllerDelegate: class {
     func charactersViewController(_ viewController: UIViewController,
-                                  didTapDetailsOfCharacter character: Character)
+                                  didTapDetailsOfCharacter character: MarvelCharacter)
 }
 
 final class CharactersViewController: UIViewController {
@@ -47,11 +47,9 @@ final class CharactersViewController: UIViewController {
         title = "Marvel Characters"
         fetchCharacters()
     }
-    
 }
 
 extension CharactersViewController {
-    
     private func fetchCharacters() {
         
         if isLoadingData { return }
@@ -66,16 +64,17 @@ extension CharactersViewController {
             self?.isLoadingData = false
             
             switch result {
+                
             case .success(let response):
                 self?.nextPage += 1
                 self?.resultSet = response.data.total
                 self?.dataSource.characters.append(contentsOf: response.data.results)
-            case .error:
-                break
+                
+            case .error(let error):
+                self?.handleError(error: error)
             }
             
         }
-        
     }
     
     func resetState() {
@@ -84,22 +83,31 @@ extension CharactersViewController {
         dataSource.characters = []
     }
     
-}
-extension CharactersViewController: CharactersDelegateProtocol {
+    func handleError(error: ResponseError) {
+        let handler: ((UIAlertAction) -> Void) = { [weak self] _ in
+            self?.fetchCharacters()
+        }
+        let alert = UIAlertController(title: error.title,
+                                      message: error.message,
+                                      positiveActionTitle: error.buttonTitle,
+                                      handler: handler)
+        present(alert, animated: true)
+    }
     
-    func didSelectCharacter(_ character: Character) {
+}
+
+extension CharactersViewController: CharactersDelegateProtocol {
+    func didSelectCharacter(_ character: MarvelCharacter) {
         delegate?.charactersViewController(self, didTapDetailsOfCharacter: character)
     }
     
     func shouldFetchMoreContent() {
         fetchCharacters()
     }
-
 }
 
 extension CharactersViewController: FavoriteDelegateProtocol {
-    
-    func didFavoriteCharacter(_ character: Character) {
+    func didFavoriteCharacter(_ character: MarvelCharacter) {
         guard var favorites = storage.get() else {
             let ids: Set<Int> = [character.id]
             storage.set(FavoriteCharacters(ids: ids))
@@ -109,16 +117,14 @@ extension CharactersViewController: FavoriteDelegateProtocol {
         storage.set(favorites)
     }
     
-    func didUnfavoriteCharacter(_ character: Character) {
+    func didUnfavoriteCharacter(_ character: MarvelCharacter) {
         guard var favorites = storage.get() else { return }
         favorites.ids.remove(character.id)
         storage.set(favorites)
     }
-    
 }
 
 extension CharactersViewController: UISearchBarDelegate {
-
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         charactersView.searchBar.resignFirstResponder()
@@ -142,5 +148,4 @@ extension CharactersViewController: UISearchBarDelegate {
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         charactersView.searchBar.showsCancelButton = true
     }
-    
 }

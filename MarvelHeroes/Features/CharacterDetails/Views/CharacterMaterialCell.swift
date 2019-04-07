@@ -13,6 +13,7 @@ final class CharacterMaterialCell: UITableViewCell {
     private let name: UILabel = {
         let name = UILabel()
         name.textAlignment = .left
+        name.numberOfLines = 0
         name.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         name.textColor = Resources.Colors.white
         return name
@@ -68,7 +69,6 @@ extension CharacterMaterialCell: ViewCodingProtocol {
         
         name.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
-            make.height.equalTo(20)
         }
         
         about.snp.makeConstraints { make in

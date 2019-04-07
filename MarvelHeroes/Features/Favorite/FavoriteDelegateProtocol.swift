@@ -9,6 +9,6 @@
 import Foundation
 
 protocol FavoriteDelegateProtocol: class {
-    func didFavoriteCharacter(_ character: Character)
-    func didUnfavoriteCharacter(_ character: Character)
+    func didFavoriteCharacter(_ character: MarvelCharacter)
+    func didUnfavoriteCharacter(_ character: MarvelCharacter)
 }

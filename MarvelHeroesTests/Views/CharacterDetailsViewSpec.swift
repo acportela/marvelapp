@@ -26,20 +26,20 @@ class CharacterDetailsViewSpec: QuickSpec {
                     
                     let frame = CGRect(x: 0, y: 0, width: 375, height: 667)
                     sut = CharacterDetailsView(frame: frame)
-                    let config = CharacterDetailsView.Configuration(name: "3-D Man", isFavorite: false, image: Thumbnail())
+                    
+                    let character = MarvelCharacter(id: 123456, name: "3-D Man", thumbnail: Thumbnail())
+                    let config = CharacterDetailsView.Configuration(character: character, isFavorite: false)
+                    
                     sut.setup(with: config)
                     sut.outlineRecursively(color: .red)
                     
                 }
                 
                 it("must render properly") {
-                    
                     expect(sut).to(matchSnapshot(named: "CharacterDetailsView"))
-                    
                 }
                 
             }
-            
             
         }
         

@@ -39,9 +39,7 @@ class CharacterMaterialCellSpec: QuickSpec {
                 }
                 
                 it("must render properly") {
-                    
                     expect(sut).to(matchSnapshot(named: "CharacterMaterialCell"))
-                    
                 }
                 
             }

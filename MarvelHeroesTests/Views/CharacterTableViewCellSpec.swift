@@ -29,9 +29,7 @@ class CharacterTableViewCellSpec: QuickSpec {
                     }
                     
                     it("must render properly") {
-                        
                         expect(sut).to(matchSnapshot(named: "CharacterTableViewCell_Favorite"))
-                        
                     }
                     
                 }
@@ -43,9 +41,7 @@ class CharacterTableViewCellSpec: QuickSpec {
                     }
                     
                     it("must render properly") {
-                        
                         expect(sut).to(matchSnapshot(named: "CharacterTableViewCell"))
-                        
                     }
                     
                 }
@@ -56,15 +52,9 @@ class CharacterTableViewCellSpec: QuickSpec {
                 
                 let frame = CGRect(x: 0, y: 0, width: 320, height: 96)
                 
-                let description = """
-                Rick Jones has been Hulk's best bud since day one, but now he's more than a friend...he's a teammate!
-                Transformed by a Gamma energy explosion
-                """
+                let character = MarvelCharacter(id: 123456, name: "3-D Man", thumbnail: Thumbnail())
                 
-                let config = CharacterTableViewCell.Configuration(name: "3-D Man",
-                                                                  about: description,
-                                                                  isFavorite: favorite,
-                                                                  image: Thumbnail())
+                let config = CharacterTableViewCell.Configuration(character: character, isFavorite: favorite)
                 
                 sut = CharacterTableViewCell(frame: frame)
                 sut.setup(with: config)

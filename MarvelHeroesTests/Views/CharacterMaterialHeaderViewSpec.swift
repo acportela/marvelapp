@@ -31,9 +31,7 @@ class CharacterMaterialHeaderViewSpec: QuickSpec {
                 }
                 
                 it("must render properly") {
-                    
                     expect(sut).to(matchSnapshot(named: "CharacterMaterialHeaderView"))
-                    
                 }
                 
             }

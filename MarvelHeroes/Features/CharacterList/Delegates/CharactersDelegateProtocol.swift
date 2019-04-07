@@ -9,6 +9,6 @@
 import Foundation
 
 protocol CharactersDelegateProtocol: class {
-    func didSelectCharacter(_ character: Character)
+    func didSelectCharacter(_ character: MarvelCharacter)
     func shouldFetchMoreContent()
 }

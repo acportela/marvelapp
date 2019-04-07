@@ -14,6 +14,7 @@ final class CharacterDetailsView: UIView {
         let view = UITableView()
         view.separatorStyle = .none
         view.allowsSelection = false
+        view.showsVerticalScrollIndicator = false
         view.estimatedRowHeight = CharacterMaterialCell.height()
         return view
     }()
@@ -41,7 +42,7 @@ final class CharacterDetailsView: UIView {
         return button
     }()
     
-    private var character: Character? {
+    private var character: MarvelCharacter? {
         didSet {
             guard let char = character else { return }
             image.download(image: char.thumbnail.fullPath)
@@ -111,6 +112,7 @@ extension CharacterDetailsView: ViewCodingProtocol {
         activityIndicator.snp.makeConstraints { make in
             make.height.width.equalTo(40)
             make.top.equalTo(heart.snp.bottom).offset(32)
+            make.centerX.equalToSuperview()
         }
         
     }
@@ -127,7 +129,7 @@ extension CharacterDetailsView: ViewCodingProtocol {
 extension CharacterDetailsView {
     
     public struct Configuration {
-        let character: Character
+        let character: MarvelCharacter
         let isFavorite: Bool
     }
     

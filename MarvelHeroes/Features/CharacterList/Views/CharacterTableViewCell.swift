@@ -40,7 +40,7 @@ final class CharacterTableViewCell: UITableViewCell {
         return button
     }()
     
-    private var character: Character? {
+    private var character: MarvelCharacter? {
         didSet {
             guard let char = character else { return }
             name.text = char.name
@@ -70,11 +70,9 @@ final class CharacterTableViewCell: UITableViewCell {
     public required init?(coder aDecoder: NSCoder) {
         fatalError("Use view coding to initialize view")
     }
-    
 }
 
 extension CharacterTableViewCell: ViewCodingProtocol {
-    
     func buildViewHierarchy() {
         addSubview(content)
         content.addSubview(thumb)
@@ -122,13 +120,11 @@ extension CharacterTableViewCell: ViewCodingProtocol {
                                                name: .characterWasUnfavorited,
                                                object: nil)
     }
-    
 }
 
 extension CharacterTableViewCell {
-    
     public struct Configuration {
-        let character: Character
+        let character: MarvelCharacter
         let isFavorite: Bool
     }
     
@@ -136,13 +132,11 @@ extension CharacterTableViewCell {
         character = config.character
         heart.isSelected = config.isFavorite
     }
-    
 }
 
 extension CharacterTableViewCell: Reusable { }
 
 extension CharacterTableViewCell {
-    
     @objc
     func handleHeartTouch() {
         heart.isSelected = !heart.isSelected
@@ -153,7 +147,7 @@ extension CharacterTableViewCell {
     func handleFavoriteNotification(_ notification: Notification) {
         guard let info = notification.userInfo,
               let object = info[Notification.Name.characterWasFavorited],
-              let character = object as? Character else {
+              let character = object as? MarvelCharacter else {
             return
         }
         if character.id == self.character?.id {
@@ -165,12 +159,11 @@ extension CharacterTableViewCell {
     func handleUnfavoriteNotification(_ notification: Notification) {
         guard let info = notification.userInfo,
               let object = info[Notification.Name.characterWasUnfavorited],
-              let character = object as? Character else {
+              let character = object as? MarvelCharacter else {
             return
         }
         if character.id == self.character?.id {
             heart.isSelected = false
         }
     }
-    
 }

@@ -39,11 +39,9 @@ final class CharactersView: UIView {
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Use view coding to initialize view")
     }
-    
 }
 
 extension CharactersView: ViewCodingProtocol {
-    
     func buildViewHierarchy() {
         addSubview(tableView)
         addSubview(searchBar)
@@ -77,5 +75,4 @@ extension CharactersView: ViewCodingProtocol {
         tableView.backgroundColor = Resources.Colors.black
         activityIndicator.isHidden = true
     }
-    
 }

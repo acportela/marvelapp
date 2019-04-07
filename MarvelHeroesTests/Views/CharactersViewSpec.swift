@@ -28,9 +28,7 @@ class CharactersViewSpec: QuickSpec {
                 }
                 
                 it("must render properly") {
-                    
                     expect(sut).to(matchSnapshot(named: "CharactersView"))
-                    
                 }
                 
             }

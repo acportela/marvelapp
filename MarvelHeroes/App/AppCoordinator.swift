@@ -35,12 +35,12 @@ class AppCoordinator: Coordinator {
     }
     
     private func startCharacters() {
-        let controller = CharactersViewController()
-        controller.delegate = self
-        navigation.pushViewController(controller, animated: false)
+        let characters = CharactersViewController()
+        characters.delegate = self
+        navigation.pushViewController(characters, animated: false)
     }
     
-    private func startDetails(ofCharacter character: Character) {
+    private func startDetails(ofCharacter character: MarvelCharacter) {
         let details = CharactersDetailsViewController(character: character)
         navigation.pushViewController(details, animated: true)
     }
@@ -50,7 +50,7 @@ class AppCoordinator: Coordinator {
 extension AppCoordinator: CharactersViewControllerDelegate {
     
     func charactersViewController(_ viewController: UIViewController,
-                                  didTapDetailsOfCharacter character: Character) {
+                                  didTapDetailsOfCharacter character: MarvelCharacter) {
         startDetails(ofCharacter: character)
     }
     

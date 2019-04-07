@@ -10,12 +10,5 @@ import Foundation
 
 enum Result<T> {
     case success(T)
-    case error(Errors)
-}
-
-enum Errors: Error {
-    case parsing
-    case connectivity
-    case authentication
-    case unknown
+    case error(ResponseError)
 }
