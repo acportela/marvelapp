@@ -56,15 +56,9 @@ extension CharactersDatasource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeue(CharacterTableViewCell.self, indexPath: indexPath)
-        
         let character = characters[indexPath.row]
-        
         let isFavorite = storage.get()?.ids.contains(character.id) ?? false
-        
-        let config = CharacterTableViewCell.Configuration(name: character.name,
-                                                          about: character.description,
-                                                          isFavorite: isFavorite,
-                                                          image: character.thumbnail)
+        let config = CharacterTableViewCell.Configuration(character: character, isFavorite: isFavorite)
         
         cell.characterWasFavorited = { [weak self] favorite in
             favorite ? self?.favoriteDelegate?.didFavoriteCharacter(character)

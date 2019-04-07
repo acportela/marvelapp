@@ -42,8 +42,8 @@ final class CharactersDetailsViewController: UIViewController {
         if let favorites = storage.get(from: .favorites)?.ids, favorites.contains(character.id) {
             isFavorite = true
         }
-        let config = CharacterDetailsView.Configuration.init(isFavorite: isFavorite,
-                                                             image: character.thumbnail)
+        let config = CharacterDetailsView.Configuration.init(character: character,
+                                                             isFavorite: isFavorite)
         detailsView.setup(with: config)
         detailsView.characterWasFavorited = { [weak self] wasFavorited in
             guard let sSelf = self else { return }

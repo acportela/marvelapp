@@ -40,6 +40,13 @@ final class CharacterDetailsView: UIView {
         return button
     }()
     
+    private var character: Character? {
+        didSet {
+            guard let char = character else { return }
+            image.download(image: char.thumbnail.fullPath)
+        }
+    }
+    
     var characterWasFavorited: ((Bool) -> Void)?
     
     private let contentView = UIView()
@@ -111,7 +118,7 @@ extension CharacterDetailsView: ViewCodingProtocol {
         backgroundColor = Resources.Colors.black
         tableView.backgroundColor = Resources.Colors.black
         activityIndicator.isHidden = true
-        heart.addTarget(self, action: #selector(heartWasTouched), for: .touchUpInside)
+        heart.addTarget(self, action: #selector(handleHeartTouch), for: .touchUpInside)
     }
     
 }
@@ -119,13 +126,13 @@ extension CharacterDetailsView: ViewCodingProtocol {
 extension CharacterDetailsView {
     
     public struct Configuration {
+        let character: Character
         let isFavorite: Bool
-        let image: Thumbnail
     }
     
     public func setup(with config: Configuration) {
-        image.download(image: config.image.fullPath)
         heart.isSelected = config.isFavorite
+        character = config.character
     }
     
 }
@@ -133,9 +140,14 @@ extension CharacterDetailsView {
 extension CharacterDetailsView {
     
     @objc
-    func heartWasTouched() {
+    func handleHeartTouch() {
         heart.isSelected = !heart.isSelected
         characterWasFavorited?(heart.isSelected)
+        let name = heart.isSelected ? Notification.Name.characterWasFavorited
+                                    : Notification.Name.characterWasUnfavorited
+        if let character = self.character {
+            NotificationCenter.default.post(name: name, object: self, userInfo: [name: character])
+        }
     }
     
 }

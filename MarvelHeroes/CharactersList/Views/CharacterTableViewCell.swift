@@ -49,6 +49,15 @@ final class CharacterTableViewCell: UITableViewCell {
         return about
     }()
     
+    private var character: Character? {
+        didSet {
+            guard let char = character else { return }
+            name.text = char.name
+            about.text = char.description
+            thumb.download(image: char.thumbnail.fullPath)
+        }
+    }
+    
     private let content = UIView()
     
     var characterWasFavorited: ((Bool) -> Void)?
@@ -121,7 +130,15 @@ extension CharacterTableViewCell: ViewCodingProtocol {
     func configureViews() {
         selectionStyle = .none
         backgroundColor = Resources.Colors.black
-        heart.addTarget(self, action: #selector(heartWasTouched), for: .touchUpInside)
+        heart.addTarget(self, action: #selector(handleHeartTouch), for: .touchUpInside)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleFavoriteNotification),
+                                               name: .characterWasFavorited,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleUnfavoriteNotification),
+                                               name: .characterWasUnfavorited,
+                                               object: nil)
     }
     
 }
@@ -129,16 +146,12 @@ extension CharacterTableViewCell: ViewCodingProtocol {
 extension CharacterTableViewCell {
     
     public struct Configuration {
-        let name: String
-        let about: String
+        let character: Character
         let isFavorite: Bool
-        let image: Thumbnail
     }
     
     public func setup(with config: Configuration) {
-        name.text = config.name
-        about.text = config.about
-        thumb.download(image: config.image.fullPath)
+        character = config.character
         heart.isSelected = config.isFavorite
     }
     
@@ -149,9 +162,33 @@ extension CharacterTableViewCell: Reusable { }
 extension CharacterTableViewCell {
     
     @objc
-    func heartWasTouched() {
+    func handleHeartTouch() {
         heart.isSelected = !heart.isSelected
         characterWasFavorited?(heart.isSelected)
+    }
+    
+    @objc
+    func handleFavoriteNotification(_ notification: Notification) {
+        guard let info = notification.userInfo,
+              let object = info[Notification.Name.characterWasFavorited],
+              let character = object as? Character else {
+            return
+        }
+        if character.id == self.character?.id {
+            heart.isSelected = true
+        }
+    }
+    
+    @objc
+    func handleUnfavoriteNotification(_ notification: Notification) {
+        guard let info = notification.userInfo,
+              let object = info[Notification.Name.characterWasUnfavorited],
+              let character = object as? Character else {
+            return
+        }
+        if character.id == self.character?.id {
+            heart.isSelected = false
+        }
     }
     
 }
