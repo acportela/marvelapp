@@ -67,7 +67,6 @@ extension CharactersViewController {
             
             switch result {
             case .success(let response):
-                //TODO refactor page update logic
                 self?.nextPage += 1
                 self?.resultSet = response.data.total
                 self?.dataSource.characters.append(contentsOf: response.data.results)
@@ -101,19 +100,19 @@ extension CharactersViewController: CharactersDelegateProtocol {
 extension CharactersViewController: FavoriteDelegateProtocol {
     
     func didFavoriteCharacter(_ character: Character) {
-        guard var favorites = storage.load() else {
+        guard var favorites = storage.get() else {
+            let ids: Set<Int> = [character.id]
+            storage.set(FavoriteCharacters(ids: ids))
             return
         }
         favorites.ids.insert(character.id)
-        try? storage.save(favorites)
+        storage.set(favorites)
     }
     
     func didUnfavoriteCharacter(_ character: Character) {
-        guard var favorites = storage.load() else {
-            return
-        }
+        guard var favorites = storage.get() else { return }
         favorites.ids.remove(character.id)
-        try? storage.save(favorites)
+        storage.set(favorites)
     }
     
 }

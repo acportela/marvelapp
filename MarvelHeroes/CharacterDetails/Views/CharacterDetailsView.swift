@@ -19,20 +19,13 @@ final class CharacterDetailsView: UIView {
     
     private let image: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFit
+        image.layer.cornerRadius = 10
+        image.layer.masksToBounds = true
         return image
     }()
-    
-    private let name: UILabel = {
-        let name = UILabel()
-        name.textAlignment = .center
-        name.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
-        name.textColor = Resources.Colors.white
-        return name
-    }()
-    
-    let activityIndicator: UIActivityIndicatorView = {
-        let indicator = UIActivityIndicatorView(style: .gray)
+
+    private let activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .white)
         indicator.hidesWhenStopped = true
         return indicator
     }()
@@ -42,8 +35,8 @@ final class CharacterDetailsView: UIView {
         button.tintColor = Resources.Colors.red
         let selected = Resources.Images.favoriteIconFilled
         let unselected = Resources.Images.favoriteIconOutlined
-        button.setImage(selected, for: .selected)
-        button.setImage(unselected, for: .normal)
+        button.setBackgroundImage(selected, for: .selected)
+        button.setBackgroundImage(unselected, for: .normal)
         return button
     }()
     
@@ -52,15 +45,21 @@ final class CharacterDetailsView: UIView {
     private let contentView = UIView()
     
     override init(frame: CGRect = .zero) {
-        
         super.init(frame: frame)
-        
         setupViewConfiguration()
-        
     }
     
     required public init?(coder aDecoder: NSCoder) {
         fatalError("Use view coding to initialize view")
+    }
+    
+    func startActivityIndicator() {
+        if activityIndicator.isAnimating { return }
+        activityIndicator.startAnimating()
+    }
+    
+    func stopActivityIndicator() {
+        activityIndicator.stopAnimating()
     }
     
 }
@@ -71,7 +70,6 @@ extension CharacterDetailsView: ViewCodingProtocol {
         addSubview(contentView)
         contentView.addSubview(image)
         contentView.addSubview(heart)
-        contentView.addSubview(name)
         contentView.addSubview(tableView)
         contentView.addSubview(activityIndicator)
     }
@@ -79,33 +77,22 @@ extension CharacterDetailsView: ViewCodingProtocol {
     func setupConstraints() {
         
         contentView.snp.makeConstraints { make in
-            make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(8)
-            make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin).inset(8)
-            make.top.equalTo(safeAreaLayoutGuide.snp.topMargin).offset(8)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottomMargin).inset(8)
+            make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(16)
+            make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin).inset(16)
+            make.top.equalTo(safeAreaLayoutGuide.snp.topMargin).offset(16)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottomMargin).inset(16)
         }
         
         image.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.height.equalTo(self.bounds.height/3)
-        }
-        
-        name.snp.makeConstraints { make in
-            make.left.equalToSuperview().offset(8)
-            make.right.equalToSuperview().inset(8)
-            make.top.equalTo(image.snp.bottom).offset(16)
+            make.height.width.equalTo(240)
         }
         
         heart.snp.makeConstraints { make in
-            make.height.width.equalTo(30)
+            make.height.width.equalTo(40)
             make.centerX.equalToSuperview()
-            make.top.equalTo(name.snp.bottom).offset(16)
-        }
-        
-        tableView.snp.makeConstraints { make in
-            make.top.equalTo(heart.snp.bottom).offset(16)
-            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(image.snp.bottom).offset(16)
         }
         
         tableView.snp.makeConstraints { make in
@@ -122,6 +109,7 @@ extension CharacterDetailsView: ViewCodingProtocol {
     
     func configureViews() {
         backgroundColor = Resources.Colors.black
+        tableView.backgroundColor = Resources.Colors.black
         activityIndicator.isHidden = true
         heart.addTarget(self, action: #selector(heartWasTouched), for: .touchUpInside)
     }
@@ -131,13 +119,11 @@ extension CharacterDetailsView: ViewCodingProtocol {
 extension CharacterDetailsView {
     
     public struct Configuration {
-        let name: String
         let isFavorite: Bool
         let image: Thumbnail
     }
     
     public func setup(with config: Configuration) {
-        name.text = config.name
         image.download(image: config.image.fullPath)
         heart.isSelected = config.isFavorite
     }
@@ -148,6 +134,7 @@ extension CharacterDetailsView {
     
     @objc
     func heartWasTouched() {
+        heart.isSelected = !heart.isSelected
         characterWasFavorited?(heart.isSelected)
     }
     

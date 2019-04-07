@@ -30,13 +30,13 @@ final class CharacterTableViewCell: UITableViewCell {
         return name
     }()
     
-    private let heart: UIButton = {
+    private lazy var heart: UIButton = {
         let button = UIButton()
         button.tintColor = Resources.Colors.red
         let selected = Resources.Images.favoriteIconFilled
         let unselected = Resources.Images.favoriteIconOutlined
-        button.setImage(selected, for: .selected)
-        button.setImage(unselected, for: .normal)
+        button.setBackgroundImage(selected, for: .selected)
+        button.setBackgroundImage(unselected, for: .normal)
         return button
     }()
     
@@ -98,7 +98,7 @@ extension CharacterTableViewCell: ViewCodingProtocol {
         }
         
         heart.snp.makeConstraints { make in
-            make.height.width.equalTo(30)
+            make.height.width.equalTo(25)
             make.right.equalToSuperview().inset(8)
             make.centerY.equalToSuperview()
         }
@@ -150,6 +150,7 @@ extension CharacterTableViewCell {
     
     @objc
     func heartWasTouched() {
+        heart.isSelected = !heart.isSelected
         characterWasFavorited?(heart.isSelected)
     }
     

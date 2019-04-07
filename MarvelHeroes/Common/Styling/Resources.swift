@@ -20,6 +20,15 @@ extension Resources.Colors {
 }
 
 extension Resources.Images {
-    static let favoriteIconFilled = UIImage(named: "favorite_full_icon")
-    static let favoriteIconOutlined = UIImage(named: "favorite_empty_icon")
+    
+    static let favoriteIconFilled = image(named: "favorite_full_icon")
+    static let favoriteIconOutlined = image(named: "favorite_empty_icon")
+    
+    private static func image(named name: String) -> UIImage {
+        guard let image = UIImage(named: name) else {
+            fatalError("There is no '\(name)' image on assets")
+        }
+        return image
+    }
+    
 }

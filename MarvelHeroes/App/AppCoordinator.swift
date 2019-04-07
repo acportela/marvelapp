@@ -32,6 +32,7 @@ class AppCoordinator: Coordinator {
         navigation.navigationBar.tintColor = Resources.Colors.white
         navigation.navigationBar.barStyle = .black
         navigation.navigationBar.isTranslucent = false
+        navigation.navigationItem.backBarButtonItem?.title = ""
     }
     
     private func startCharacters() {
@@ -40,9 +41,9 @@ class AppCoordinator: Coordinator {
         navigation.pushViewController(controller, animated: false)
     }
     
-    private func startDetails(ofCharacter character: Character,
-                              withFavoriteState favorite: Bool) {
-        
+    private func startDetails(ofCharacter character: Character) {
+        let details = CharactersDetailsViewController(character: character)
+        navigation.pushViewController(details, animated: true)
     }
     
 }
@@ -51,7 +52,7 @@ extension AppCoordinator: CharactersViewControllerDelegate {
     
     func charactersViewController(_ viewController: UIViewController,
                                   didTapDetailsOfCharacter character: Character) {
-        
+        startDetails(ofCharacter: character)
     }
     
 }

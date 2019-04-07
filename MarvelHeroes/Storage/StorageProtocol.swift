@@ -8,14 +8,12 @@
 
 import Foundation
 
+enum StorageKeys: String {
+    case favorites
+}
+
 protocol StorageProtocol {
-    
     associatedtype Object: Codable
-    
-    var path: URL { get }
-    
-    func save(_ object: Object) throws
-    
-    func load() -> Object?
-    
+    func get(from key: StorageKeys) -> Object?
+    func set(_ value: Object, for key: StorageKeys)
 }

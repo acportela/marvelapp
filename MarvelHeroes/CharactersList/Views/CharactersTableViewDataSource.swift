@@ -59,7 +59,7 @@ extension CharactersDatasource: UITableViewDataSource {
         
         let character = characters[indexPath.row]
         
-        let isFavorite = storage.load()?.ids.contains(character.id) ?? false
+        let isFavorite = storage.get()?.ids.contains(character.id) ?? false
         
         let config = CharacterTableViewCell.Configuration(name: character.name,
                                                           about: character.description,
