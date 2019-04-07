@@ -14,6 +14,7 @@ final class CharacterDetailsView: UIView {
         let view = UITableView()
         view.separatorStyle = .none
         view.allowsSelection = false
+        view.estimatedRowHeight = CharacterMaterialCell.height()
         return view
     }()
     
@@ -86,20 +87,20 @@ extension CharacterDetailsView: ViewCodingProtocol {
         contentView.snp.makeConstraints { make in
             make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(16)
             make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin).inset(16)
-            make.top.equalTo(safeAreaLayoutGuide.snp.topMargin).offset(16)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottomMargin).inset(16)
+            make.top.equalTo(safeAreaLayoutGuide.snp.topMargin).offset(32)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottomMargin).inset(32)
         }
         
         image.snp.makeConstraints { make in
             make.top.equalToSuperview()
             make.centerX.equalToSuperview()
-            make.height.width.equalTo(240)
+            make.height.width.equalTo(200)
         }
         
         heart.snp.makeConstraints { make in
-            make.height.width.equalTo(40)
+            make.height.width.equalTo(30)
             make.centerX.equalToSuperview()
-            make.top.equalTo(image.snp.bottom).offset(16)
+            make.top.equalTo(image.snp.bottom).offset(32)
         }
         
         tableView.snp.makeConstraints { make in
@@ -109,7 +110,7 @@ extension CharacterDetailsView: ViewCodingProtocol {
         
         activityIndicator.snp.makeConstraints { make in
             make.height.width.equalTo(40)
-            make.center.equalToSuperview()
+            make.top.equalTo(heart.snp.bottom).offset(32)
         }
         
     }

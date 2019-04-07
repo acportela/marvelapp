@@ -11,10 +11,10 @@ import Foundation
 enum MarvelEndpoints {
     
     case characters
-    case comics(String)
-    case events(String)
-    case series(String)
-    case stories(String)
+    case comics(Int)
+    case events(Int)
+    case series(Int)
+    case stories(Int)
     
     var path: String {
         switch self {

@@ -12,8 +12,8 @@ final class CharacterMaterialCell: UITableViewCell {
     
     private let name: UILabel = {
         let name = UILabel()
-        name.textAlignment = .center
-        name.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        name.textAlignment = .left
+        name.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         name.textColor = Resources.Colors.white
         return name
     }()
@@ -22,7 +22,7 @@ final class CharacterMaterialCell: UITableViewCell {
         let about =  UILabel()
         about.textAlignment = .left
         about.numberOfLines = 0
-        about.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        about.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         about.textColor = Resources.Colors.white
         return about
     }()
@@ -60,16 +60,16 @@ extension CharacterMaterialCell: ViewCodingProtocol {
     func setupConstraints() {
         
         container.snp.makeConstraints { make in
-            make.top.left.equalToSuperview().offset(8)
-            make.right.bottom.equalToSuperview().inset(8)
+            make.top.equalToSuperview().offset(16)
+            make.bottom.equalToSuperview().inset(8)
+            make.left.equalToSuperview().offset(8)
+            make.right.equalToSuperview().inset(8)
         }
         
         name.snp.makeConstraints { make in
             make.left.top.right.equalToSuperview()
             make.height.equalTo(20)
         }
-        
-        //about.setContentCompressionResistancePriority(.required, for: .vertical)
         
         about.snp.makeConstraints { make in
             make.left.bottom.right.equalToSuperview()

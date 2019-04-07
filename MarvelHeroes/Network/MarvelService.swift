@@ -13,13 +13,20 @@ typealias MaterialsResultType = Result<APIResponse<CharacterMaterial>>
 
 protocol MarvelServiceProtocol: class {
     func fetchCharacters(name: String?, offset: Int, callback: @escaping (CharactersResultType) -> Void )
-    func fetchComics(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
-    func fetchStories(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
-    func fetchEvents(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
-    func fetchSeries(characterID: Int, callback: @escaping (MaterialsResultType) -> Void )
+    func fetchMaterial(ofKind kind: MaterialKind, callback: @escaping (MaterialsResultType) -> Void )
 }
 
 final class MarvelService: MarvelServiceProtocol {
+    
+    func fetchMaterial(ofKind kind: MaterialKind, callback: @escaping (MaterialsResultType) -> Void) {
+        var queries = MarvelClient.Configuration.defaultQueries
+        queries["limit"] = "3"
+        
+        let url = buildURL(forPath: kind.endpoint.path,
+                           andQueries: queries)
+        
+        MarvelClient.sharedClient.requestDecodadle(url: url, callback: callback)
+    }
     
     func fetchCharacters(name: String? = nil, offset: Int, callback: @escaping (CharactersResultType) -> Void) {
         
@@ -31,24 +38,8 @@ final class MarvelService: MarvelServiceProtocol {
             queries["nameStartsWith"] = someName
         }
         
-        let url = buildURL(withQueries: queries)
+        let url = buildURL(forPath: MarvelEndpoints.characters.path, andQueries: queries)
         MarvelClient.sharedClient.requestDecodadle(url: url, callback: callback)
-        
-    }
-    
-    func fetchComics(characterID: Int, callback: @escaping (MaterialsResultType) -> Void) {
-        
-    }
-    
-    func fetchStories(characterID: Int, callback: @escaping (MaterialsResultType) -> Void) {
-        
-    }
-    
-    func fetchEvents(characterID: Int, callback: @escaping (MaterialsResultType) -> Void) {
-        
-    }
-    
-    func fetchSeries(characterID: Int, callback: @escaping (MaterialsResultType) -> Void) {
         
     }
     
@@ -66,8 +57,8 @@ extension MarvelService {
         return flattened
     }
     
-    func buildURL(withQueries queries: [String: String] = MarvelClient.Configuration.defaultQueries) -> URL {
-        let baseAndPath = MarvelClient.Configuration.baseURL + MarvelEndpoints.characters.path
+    func buildURL(forPath path: String, andQueries queries: [String: String]) -> URL {
+        let baseAndPath = MarvelClient.Configuration.baseURL + path
         let urlString = baseAndPath + flattened(queries: queries)
         return URL(string: urlString)!
     }

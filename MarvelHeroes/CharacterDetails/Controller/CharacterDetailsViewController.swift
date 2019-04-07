@@ -34,6 +34,10 @@ final class CharactersDetailsViewController: UIViewController {
         super.viewDidLoad()
         setupView()
         favoriteDelegate = self
+        fetchMaterial(ofKind: .comics(character.id))
+        fetchMaterial(ofKind: .events(character.id))
+        fetchMaterial(ofKind: .stories(character.id))
+        fetchMaterial(ofKind: .series(character.id))
     }
     
     func setupView() {
@@ -59,23 +63,22 @@ final class CharactersDetailsViewController: UIViewController {
     
 }
 
-extension CharactersViewController {
+extension CharactersDetailsViewController {
     
-    private func fetchCharacters() {
-        
-//        service.fetchCharacters(name: currentSearch, offset: nextPage*20) { [weak self] result in
-//            
-//            switch result {
-//            case .success(let response):
-//                break
-//            case .error:
-//                break
-//            }
-//            
-//        }
-        
+    func fetchMaterial(ofKind kind: MaterialKind) {
+        detailsView.startActivityIndicator()
+        service.fetchMaterial(ofKind: kind) { [weak self] result in
+            self?.detailsView.stopActivityIndicator()
+            switch result {
+            case .success(let response):
+                guard response.data.total > 0 else { return }
+                let results = Array(response.data.results.prefix(3))
+                self?.dataSource.updateTable(with: results, ofKind: kind)
+            case .error:
+                break
+            }
+        }
     }
-    
 }
 
 extension CharactersDetailsViewController: FavoriteDelegateProtocol {

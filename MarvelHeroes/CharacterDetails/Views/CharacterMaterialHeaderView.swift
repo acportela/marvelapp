@@ -13,13 +13,13 @@ final class CharacterMaterialHeaderView: UIView {
     private let name: UILabel = {
         let name = UILabel()
         name.textAlignment = .center
-        name.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
+        name.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         name.textColor = Resources.Colors.red
         return name
     }()
     
     static func height() -> CGFloat {
-        return 30
+        return 35
     }
 
     override init(frame: CGRect = .zero) {

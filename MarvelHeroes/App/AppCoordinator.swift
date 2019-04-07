@@ -32,7 +32,6 @@ class AppCoordinator: Coordinator {
         navigation.navigationBar.tintColor = Resources.Colors.white
         navigation.navigationBar.barStyle = .black
         navigation.navigationBar.isTranslucent = false
-        navigation.navigationItem.backBarButtonItem?.title = ""
     }
     
     private func startCharacters() {
