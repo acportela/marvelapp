@@ -18,17 +18,25 @@ protocol MarvelServiceProtocol: class {
 
 final class MarvelService: MarvelServiceProtocol {
     
-    func fetchMaterial(ofKind kind: MaterialKind, callback: @escaping (MaterialsResultType) -> Void) {
+    let client: APIClient
+    
+    init(client: APIClient = MarvelClient.sharedClient) {
+        self.client = client
+    }
+    
+    public func fetchMaterial(ofKind kind: MaterialKind, callback: @escaping (MaterialsResultType) -> Void) {
         var queries = MarvelClient.Configuration.defaultQueries
         queries["limit"] = "3"
         
         let url = buildURL(forPath: kind.endpoint.path,
                            andQueries: queries)
         
-        MarvelClient.sharedClient.requestDecodadle(url: url, callback: callback)
+        client.requestDecodadle(url: url, callback: callback)
     }
     
-    func fetchCharacters(name: String? = nil, offset: Int, callback: @escaping (CharactersResultType) -> Void) {
+    public func fetchCharacters(name: String? = nil,
+                                offset: Int = 0,
+                                callback: @escaping (CharactersResultType) -> Void) {
         
         var queries = MarvelClient.Configuration.defaultQueries
         queries["offset"] = offset.description
@@ -39,7 +47,7 @@ final class MarvelService: MarvelServiceProtocol {
         }
         
         let url = buildURL(forPath: MarvelEndpoints.characters.path, andQueries: queries)
-        MarvelClient.sharedClient.requestDecodadle(url: url, callback: callback)
+        client.requestDecodadle(url: url, callback: callback)
         
     }
     

@@ -24,6 +24,7 @@ final class CharacterTableViewCell: UITableViewCell {
         name.textAlignment = .left
         name.font = UIFont.systemFont(ofSize: 17, weight: .semibold)
         name.adjustsFontSizeToFitWidth = true
+        name.numberOfLines = 2
         name.minimumScaleFactor = 0.9
         name.lineBreakMode = .byClipping
         name.textColor = Resources.Colors.white

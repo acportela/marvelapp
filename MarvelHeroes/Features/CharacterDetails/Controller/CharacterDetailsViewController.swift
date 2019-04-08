@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CharactersDetailsViewController: UIViewController {
+final class CharacterDetailsViewController: UIViewController {
     
     let character: MarvelCharacter
     let detailsView = CharacterDetailsView()
@@ -62,7 +62,7 @@ final class CharactersDetailsViewController: UIViewController {
     
 }
 
-extension CharactersDetailsViewController {
+extension CharacterDetailsViewController {
     
     func fetchDetails() {
         fetchMaterial(ofKind: .comics(character.id))
@@ -111,7 +111,7 @@ extension CharactersDetailsViewController {
     
 }
 
-extension CharactersDetailsViewController: FavoriteDelegateProtocol {
+extension CharacterDetailsViewController: FavoriteDelegateProtocol {
     func didFavoriteCharacter(_ character: MarvelCharacter) {
         guard var favorites = storage.get() else {
             let ids: Set<Int> = [character.id]

@@ -88,8 +88,8 @@ extension CharacterDetailsView: ViewCodingProtocol {
         contentView.snp.makeConstraints { make in
             make.left.equalTo(safeAreaLayoutGuide.snp.leftMargin).offset(16)
             make.right.equalTo(safeAreaLayoutGuide.snp.rightMargin).inset(16)
-            make.top.equalTo(safeAreaLayoutGuide.snp.topMargin).offset(32)
-            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottomMargin).inset(32)
+            make.top.equalTo(safeAreaLayoutGuide.snp.topMargin).offset(24)
+            make.bottom.equalTo(safeAreaLayoutGuide.snp.bottomMargin)
         }
         
         image.snp.makeConstraints { make in
@@ -101,7 +101,7 @@ extension CharacterDetailsView: ViewCodingProtocol {
         heart.snp.makeConstraints { make in
             make.height.width.equalTo(30)
             make.centerX.equalToSuperview()
-            make.top.equalTo(image.snp.bottom).offset(32)
+            make.top.equalTo(image.snp.bottom).offset(24)
         }
         
         tableView.snp.makeConstraints { make in
@@ -110,8 +110,7 @@ extension CharacterDetailsView: ViewCodingProtocol {
         }
         
         activityIndicator.snp.makeConstraints { make in
-            make.height.width.equalTo(40)
-            make.top.equalTo(heart.snp.bottom).offset(32)
+            make.top.equalTo(heart.snp.bottom).offset(24)
             make.centerX.equalToSuperview()
         }
         

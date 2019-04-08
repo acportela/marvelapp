@@ -11,7 +11,11 @@ import Alamofire
 import Keys
 import CryptoSwift
 
-class MarvelClient: SessionManager {
+protocol APIClient: class {
+    func requestDecodadle<T: Decodable>(url: URL, callback: @escaping (Result<T>) -> Void)
+}
+
+class MarvelClient: SessionManager, APIClient {
     
     private init() {
         super.init()

@@ -64,7 +64,6 @@ extension CharactersView: ViewCodingProtocol {
         }
         
         activityIndicator.snp.makeConstraints { make in
-            make.height.width.equalTo(40)
             make.center.equalToSuperview()
         }
         

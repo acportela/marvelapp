@@ -19,7 +19,7 @@ final class CharacterMaterialHeaderView: UIView {
     }()
     
     static func height() -> CGFloat {
-        return 35
+        return 30
     }
 
     override init(frame: CGRect = .zero) {

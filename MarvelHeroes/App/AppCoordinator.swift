@@ -41,7 +41,7 @@ class AppCoordinator: Coordinator {
     }
     
     private func startDetails(ofCharacter character: MarvelCharacter) {
-        let details = CharactersDetailsViewController(character: character)
+        let details = CharacterDetailsViewController(character: character)
         navigation.pushViewController(details, animated: true)
     }
     
