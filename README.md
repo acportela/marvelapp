@@ -1,9 +1,9 @@
 # Marvell App
 Fartfech Brazil Challenge
 
-# **Third party libraries**
+### **Third party libraries**
 To be honest, I didn't realize there was a limitation on the number of libraries
-until it was too late to change. Sorry for that... can I explain why I chose them?
+until it was too late to change. Sorry for that... well, here is why I chose them:
 
 **AlamoFire**
 I could have used the native URLSession class,
