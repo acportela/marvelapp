@@ -1,4 +1,4 @@
-# Marvell App
+# Marvel App
 Fartfech Brazil Challenge
 
 ### **Third party libraries**
