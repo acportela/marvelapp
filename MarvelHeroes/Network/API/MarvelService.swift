@@ -28,8 +28,11 @@ final class MarvelService: MarvelServiceProtocol {
         var queries = MarvelClient.Configuration.defaultQueries
         queries["limit"] = "3"
         
-        let url = buildURL(forPath: kind.endpoint.path,
-                           andQueries: queries)
+        guard let url = buildURL(forPath: kind.endpoint.path,
+                                 andQueries: queries) else {
+            callback(.error(.malformedURL))
+            return
+        }
         
         client.requestDecodadle(url: url, callback: callback)
     }
@@ -43,12 +46,17 @@ final class MarvelService: MarvelServiceProtocol {
         queries["limit"] = "20"
 
         if let someName = name, !someName.isEmpty {
-            queries["nameStartsWith"] = someName
+            let spaceFormatted = someName.replacingOccurrences(of: " ", with: "%20")
+            queries["nameStartsWith"] = spaceFormatted
         }
         
-        let url = buildURL(forPath: MarvelEndpoints.characters.path, andQueries: queries)
-        client.requestDecodadle(url: url, callback: callback)
+        guard let url = buildURL(forPath: MarvelEndpoints.characters.path,
+                                 andQueries: queries) else {
+            callback(.error(.malformedURL))
+            return
+        }
         
+        client.requestDecodadle(url: url, callback: callback)
     }
     
 }
@@ -65,10 +73,10 @@ extension MarvelService {
         return flattened
     }
     
-    func buildURL(forPath path: String, andQueries queries: [String: String]) -> URL {
+    func buildURL(forPath path: String, andQueries queries: [String: String]) -> URL? {
         let baseAndPath = MarvelClient.Configuration.baseURL + path
         let urlString = baseAndPath + flattened(queries: queries)
-        return URL(string: urlString)!
+        return URL(string: urlString)
     }
     
 }

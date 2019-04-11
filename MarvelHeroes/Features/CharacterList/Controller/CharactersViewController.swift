@@ -83,13 +83,17 @@ extension CharactersViewController {
         dataSource.characters = []
     }
     
-    func handleError(error: ResponseError) {
+    func handleError(error: Errors) {
         let handler: ((UIAlertAction) -> Void) = { [weak self] _ in
+            if error == .malformedURL {
+                return
+            }
             self?.fetchCharacters()
         }
         let alert = UIAlertController(title: error.title,
                                       message: error.message,
-                                      positiveActionTitle: error.buttonTitle,
+                                      primaryActionTitle: error.buttonTitle,
+                                      secondaryActionTitle: error.secodaryButtonTitle,
                                       handler: handler)
         present(alert, animated: true)
     }

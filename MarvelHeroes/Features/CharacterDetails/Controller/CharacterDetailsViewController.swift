@@ -93,16 +93,22 @@ extension CharacterDetailsViewController {
         }
     }
     
-    func handleError(error: ResponseError) {
+    func handleError(error: Errors) {
+        
         let handler: ((UIAlertAction) -> Void) = { [weak self] _ in
             self?.alertController = nil
+            if error == .malformedURL {
+                return
+            }
             self?.fetchDetails()
         }
+        
         if self.alertController == nil {
             alertController = UIAlertController(title: error.title,
-                                          message: error.message,
-                                          positiveActionTitle: error.buttonTitle,
-                                          handler: handler)
+                                                message: error.message,
+                                                primaryActionTitle: error.buttonTitle,
+                                                secondaryActionTitle: error.secodaryButtonTitle,
+                                                handler: handler)
             if let alert = alertController {
                 present(alert, animated: true)
             }
